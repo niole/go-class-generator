@@ -10,6 +10,8 @@ var REACT = "react"
 var JS = "js"
 var ES5 = "es5"
 var ES6 = "es6"
+var JSSUFFIX = ".js"
+var REACTSUFFIX = ".jsx"
 
 func main() {
 	/**
@@ -40,9 +42,9 @@ type File struct {
 }
 
 func (f *File) createFile() *os.File {
-	suffix := ".js"
+	suffix := JSSUFFIX
 	if f.language == REACT {
-		suffix = ".jsx"
+		suffix = REACTSUFFIX
 	}
 
 	file, err := os.Create(f.name + suffix)
