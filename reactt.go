@@ -12,13 +12,20 @@ var ES5 = "es5"
 var ES6 = "es6"
 var JSSUFFIX = ".js"
 var REACTSUFFIX = ".jsx"
+var ADD = "-a"
+var REMOVE = "-r"
+var ARGS = "args"
 
 func main() {
 	/**
 	arg 0 is always the name of this file, ignore
 	arg 1: 'react', 'js', ...
 	arg 2: 'es5', 'es6', ...
-	arg 3: name of class
+	arg 3: name(s) of class(es) with TODO optional -a (add) and -r (remove) flags for elements to add or remove
+		react classes:
+			* state, props, defaultprops (e.g. react es6 Cats -a props -r state Dogs Animals)
+		js classes:
+			* constructor arguments, e.g: js es5 Cats -a -args legTotal hasWhiskers Dogs Animals
 	*/
 
 	args := os.Args
