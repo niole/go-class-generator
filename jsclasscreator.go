@@ -88,7 +88,7 @@ func makeES5ReactClass(name string) string {
 	usestrict := "'use strict';\n"
 	imprt := "var React = require('react');\n\n\n"
 
-	render := "\trender: function() {\n\t\treturn (\n\t\t);\n\t},\n"
+	render := "\trender: function() {\n\t\treturn (\n\t\t);\n\t}\n"
 	getInitialState := "\tgetInitialState: function() {\n\t\treturn {\n\t\t};\n\t},\n\n"
 
 	class := fmt.Sprintf("var %s = React.createClass({\n%s%s});\n\n", name, getInitialState, render)
