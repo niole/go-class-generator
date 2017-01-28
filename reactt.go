@@ -56,13 +56,37 @@ func (f *File) createFile() *os.File {
 	return file
 }
 
-func makeES5Class(name string) (content string) {
-	content += "'use strict';\n\n"
-	content += fmt.Sprintf("function %s() {\n}\n\n", name)
-	content += fmt.Sprintf("%s.prototype.constructor = %s;\n\n", name, name)
-	content += fmt.Sprintf("%s.prototype.get%s = function() {\n};\n\n", name, name)
-	content += fmt.Sprintf("%s.prototype.set%s = function() {\n};\n\n", name, name)
-	return
+func makeES5Class(name string) string {
+	usestrict := "'use strict';\n"
+	constructor := fmt.Sprintf("function %s() {\n}\n", name)
+	constructoradd := fmt.Sprintf("%s.prototype.constructor = %s;\n", name, name)
+	export := fmt.Sprintf("module.exports = %s;", name)
+	return fmt.Sprintf("%s\n%s\n%s\n%s", usestrict, constructor, constructoradd, export)
+}
+
+func makeES6Class(name string) string {
+	return fmt.Sprintf("export default class %s {\n\tconstructor() {\n\t}\n}", name)
+}
+
+func makeES6ReactClass(name string) string {
+	render := "\trender() {\n\t\treturn (\n\t\t);\n\t}\n"
+	state := "\t\tthis.state = {\n\t\t};\n"
+	super := "\t\tsuper();\n\n"
+	constructor := fmt.Sprintf("\tconstructor() {\n%s%s\t}\n\n", super, state)
+	class := fmt.Sprintf("export default class %s extends Component {\n%s%s}", name, constructor, render)
+	return fmt.Sprintf("import React, {PropTypes, Component} from 'react';\n\n\n%s", class)
+}
+
+func makeES5ReactClass(name string) string {
+	usestrict := "'use strict';\n"
+	imprt := "var React = require('react');\n\n\n"
+
+	render := "\trender: function() {\n\t\treturn (\n\t\t);\n\t},\n"
+	getInitialState := "\tgetInitialState: function() {\n\t\treturn {\n\t\t};\n\t},\n\n"
+
+	class := fmt.Sprintf("var %s = React.createClass({\n%s%s});\n\n", name, getInitialState, render)
+	export := fmt.Sprintf("module.exports = %s;", name)
+	return fmt.Sprintf("%s%s%s%s", usestrict, imprt, class, export)
 }
 
 func (f *File) createContent() (content string) {
@@ -72,14 +96,17 @@ func (f *File) createContent() (content string) {
 		}
 
 		if f.version == ES6 {
+			content += makeES6Class(f.name)
 		}
 	}
 
 	if f.language == REACT {
 		if f.version == ES5 {
+			content += makeES5ReactClass(f.name)
 		}
 
 		if f.version == ES6 {
+			content += makeES6ReactClass(f.name)
 		}
 	}
 
