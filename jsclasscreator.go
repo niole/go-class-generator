@@ -18,7 +18,7 @@ var ARGS = "args"
 
 func main() {
 	/**
-	arg 0 is always the name of this file, ignore ddddddrrraaaa CHANGES
+	arg 0 is always the name of this file, ignore ddddddrrraaaa CHANGES THIS IS ANOTHER ONE
 	arg 1: 'react', 'js', ...
 	arg 2: 'es5', 'es6', ...
 	arg 3: name(s) of class(es) with TODO optional -a (add) and -r (remove) flags for elements to add or remove
